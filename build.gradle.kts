@@ -36,6 +36,6 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib-js"))
-    implementation("io.fritz2.fritz2-core-js:0.1")
+    implementation("io.fritz2:fritz2-core-js:0.1")
 }
 
