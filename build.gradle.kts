@@ -8,12 +8,12 @@ buildscript {
     }
 
     dependencies {
-        classpath(kotlin("gradle-plugin", version = "1.3.61"))
+        classpath(kotlin("gradle-plugin", version = "1.3.70"))
     }
 }
 
 plugins {
-    kotlin("js") version("1.3.61")
+    kotlin("js") version("1.3.70")
 }
 
 //TODO: add DCE and closure-compiler
