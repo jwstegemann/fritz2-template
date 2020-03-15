@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath(kotlin("gradle-plugin", version = "1.3.70"))
+        classpath(kotlin("gradle-plugin"))
     }
 }
 
@@ -20,12 +20,6 @@ plugins {
 kotlin {
     target {
         browser {
-            runTask {
-                devServer = KotlinWebpackConfig.DevServer(
-                    port = 9000,
-                    contentBase = listOf("$projectDir/src/main/web")
-                )
-            }
         }
     }
 }
