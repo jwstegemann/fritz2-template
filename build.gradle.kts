@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
-
 buildscript {
     repositories {
         mavenLocal()
@@ -30,6 +28,7 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib-js"))
-    implementation("io.fritz2:fritz2-core-js:0.1")
+    implementation("io.fritz2:fritz2-core-js:0.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.3.4")
 }
 
