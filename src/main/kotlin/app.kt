@@ -5,7 +5,7 @@ import io.fritz2.dom.mount
 fun main() {
     html {
         p {
-            +"Hello World!"
+            text("Hello World!")
         }
     }.mount("target")
 }
