@@ -1,9 +1,9 @@
-import io.fritz2.dom.html.html
+import io.fritz2.dom.html.render
 import io.fritz2.dom.mount
 
 
 fun main() {
-    html {
+    render {
         p {
             text("Hello World!")
         }
