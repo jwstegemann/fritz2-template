@@ -1,32 +1,47 @@
 buildscript {
     repositories {
-        mavenLocal()
-        mavenCentral()
+        mavenLocal() //FIXME: nicht einchecken
         jcenter()
     }
 
     dependencies {
         classpath(kotlin("gradle-plugin"))
+        classpath("io.fritz2:fritz2-gradle-plugin:0.5")
     }
 }
 
 plugins {
-    kotlin("js") version("1.3.71")
+    kotlin("multiplatform") version("1.3.72")
+    kotlin("kapt") version("1.3.72")
 }
 
-kotlin {
-    target {
-        browser {
-        }
-    }
-}
+apply(plugin = "io.fritz2.fritz2-gradle")
 
 repositories {
+    mavenLocal()
     jcenter()
 }
 
-dependencies {
-    implementation(kotlin("stdlib-js"))
-    implementation("io.fritz2:fritz2-core-js:0.4")
-}
+kotlin {
+    kotlin {
+        jvm()
+        js().browser()
 
+        sourceSets {
+            val commonMain by getting {
+                dependencies {
+                    implementation(kotlin("stdlib"))
+                }
+            }
+            val jvmMain by getting {
+                dependencies {
+                }
+            }
+            val jsMain by getting {
+                dependencies {
+                }
+            }
+
+        }
+    }
+}
