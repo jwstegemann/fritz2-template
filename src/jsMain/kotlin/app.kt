@@ -3,6 +3,7 @@ import io.fritz2.dom.mount
 
 
 fun main() {
+    //hugo()
     render {
         p {
             text("Hello World!")
