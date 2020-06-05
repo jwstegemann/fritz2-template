@@ -22,12 +22,6 @@ repositories {
     jcenter()
 }
 
-kapt {
-    correctErrorTypes = true
-    this.includeCompileClasspath = true
-    this.generateStubs = true
-}
-
 kotlin {
     kotlin {
         jvm()
