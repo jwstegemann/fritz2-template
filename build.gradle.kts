@@ -9,7 +9,11 @@ repositories {
 kotlin {
     kotlin {
         jvm()
-        js().browser()
+        js().browser {
+            webpackTask {
+                outputFileName = "app.js"
+            }
+        }
 
         sourceSets {
             val commonMain by getting {
