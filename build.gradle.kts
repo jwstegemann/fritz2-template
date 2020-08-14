@@ -1,5 +1,5 @@
 plugins {
-    id("dev.fritz2.fritz2-gradle") version "0.6"
+    id("dev.fritz2.fritz2-gradle") version "0.7"
 }
 
 repositories {
