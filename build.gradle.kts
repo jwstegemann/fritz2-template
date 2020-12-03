@@ -1,16 +1,17 @@
 plugins {
-    kotlin("multiplatform") version "1.4.0"
-    id("dev.fritz2.fritz2-gradle") version "0.7.1"
+    kotlin("multiplatform") version "1.4.10"
+    id("dev.fritz2.fritz2-gradle") version "0.8"
 }
 
 repositories {
     jcenter()
+    maven("https://dl.bintray.com/jwstegemann/fritz2")
 }
 
 kotlin {
     kotlin {
         jvm()
-        js().browser()
+        js(LEGACY).browser()
 
         sourceSets {
             val commonMain by getting {

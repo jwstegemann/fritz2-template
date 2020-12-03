@@ -4,7 +4,7 @@ import dev.fritz2.dom.mount
 fun main() {
     render {
         p {
-            text("Hello World!")
+            +("Hello World!")
         }
     }.mount("target")
 }
