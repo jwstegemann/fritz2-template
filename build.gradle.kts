@@ -11,9 +11,8 @@ repositories {
 kotlin {
     kotlin {
         jvm()
-        js().browser() // working
-        // not working
-//        js(IR) {
+        js().browser()  // working
+//        js(IR) {      // not working
 //            browser()
 //        }.binaries.executable()
 
