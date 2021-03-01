@@ -9,26 +9,24 @@ repositories {
 }
 
 kotlin {
-    kotlin {
-        jvm()
-        js().browser()  // working
-//        js(IR) {      // not working
-//            browser()
-//        }.binaries.executable()
+    jvm()
+//        js().browser()  // working
+    js(IR) {      // not working
+        browser()
+    }.binaries.executable()
 
-        sourceSets {
-            val commonMain by getting {
-                dependencies {
-                    implementation("dev.fritz2:core:0.9-SNAPSHOT")
-                }
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation("dev.fritz2:core:0.9-SNAPSHOT")
             }
-            val jvmMain by getting {
-                dependencies {
-                }
+        }
+        val jvmMain by getting {
+            dependencies {
             }
-            val jsMain by getting {
-                dependencies {
-                }
+        }
+        val jsMain by getting {
+            dependencies {
             }
         }
     }
