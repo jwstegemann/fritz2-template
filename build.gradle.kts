@@ -1,6 +1,5 @@
 plugins {
-    kotlin("multiplatform") version "1.4.10"
-    id("dev.fritz2.fritz2-gradle") version "0.8"
+    id("dev.fritz2.fritz2-gradle") version "0.9"
 }
 
 repositories {
@@ -9,23 +8,25 @@ repositories {
 }
 
 kotlin {
-    kotlin {
-        jvm()
-        js(LEGACY).browser()
+    jvm()
+    js(IR) {
+        browser()
+    }.binaries.executable()
 
-        sourceSets {
-            val commonMain by getting {
-                dependencies {
-                    implementation(kotlin("stdlib"))
-                }
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation("dev.fritz2:core:0.9")
+                // see https://components.fritz2.dev/
+                // implementation("dev.fritz2:components:0.9")
             }
-            val jvmMain by getting {
-                dependencies {
-                }
+        }
+        val jvmMain by getting {
+            dependencies {
             }
-            val jsMain by getting {
-                dependencies {
-                }
+        }
+        val jsMain by getting {
+            dependencies {
             }
         }
     }
