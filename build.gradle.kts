@@ -4,6 +4,7 @@ plugins {
 
 repositories {
     jcenter()
+    mavenCentral()
     maven("https://dl.bintray.com/jwstegemann/fritz2")
 }
 
