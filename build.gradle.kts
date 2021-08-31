@@ -1,5 +1,5 @@
 plugins {
-    id("dev.fritz2.fritz2-gradle") version "0.11.1"
+    id("dev.fritz2.fritz2-gradle") version "0.12"
 }
 
 repositories {
@@ -15,9 +15,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("dev.fritz2:core:0.11.1")
+                implementation("dev.fritz2:core:0.12")
                 // see https://components.fritz2.dev/
-                // implementation("dev.fritz2:components:0.11.1")
+                // implementation("dev.fritz2:components:0.12")
             }
         }
         val jvmMain by getting {
