@@ -3,6 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
+    <style>
+        .transition-all {
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+
+        .duration-1000 {
+            transition-duration: 1000ms;
+        }
+
+        .opacity-0 {
+            opacity: 0;
+        }
+
+        .opacity-100 {
+            opacity: 1;
+        }
+
+        .ease-out {
+            transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+        }
+    </style>
 </head>
 <body id="target">
 Loading...
