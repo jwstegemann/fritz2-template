@@ -1,19 +1,26 @@
 import dev.fritz2.binding.storeOf
-import dev.fritz2.dom.DomLifecycle
 import dev.fritz2.dom.DomLifecycleHandler
+import dev.fritz2.dom.WithDomNode
+import dev.fritz2.dom.html.RenderContext
+import dev.fritz2.dom.html.Scope
+import dev.fritz2.dom.html.ScopeContext
 import dev.fritz2.dom.html.render
 import dev.fritz2.dom.mountPoint
+import kotlinx.browser.document
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.asDeferred
+import org.w3c.dom.DocumentFragment
+import org.w3c.dom.Element
 import org.w3c.dom.Node
 import kotlin.js.Promise
 
 class Transition(
-    val enter: String,
-    val enterStart: String,
-    val enterEnd: String,
-    val leave: String,
-    val leaveStart: String,
-    val leaveEnd: String
+    val enter: String? = null,
+    val enterStart: String? = null,
+    val enterEnd: String? = null,
+    val leave: String? = null,
+    val leaveStart: String? = null,
+    val leaveEnd: String? = null
 )
 
 val fade = Transition(
@@ -41,30 +48,72 @@ val animationDone = nativeFunction<(Node) -> Promise<Unit>>(
     """.trimIndent()
 )
 
-val leaveTransition: DomLifecycleHandler = { tag, payload ->
+val leaveTransition: DomLifecycleHandler = { target, payload ->
     val transition = payload.unsafeCast<Transition?>()
-    if (transition != null) {
-        val classes = tag.domNode.getAttribute("class").orEmpty()
-        tag.domNode.setAttribute("class", "$classes ${transition.leaveStart}")
-        tag.domNode.setAttribute("class", "$classes ${transition.leave} ${transition.leaveEnd}")
-    }
-    animationDone(tag.domNode).asDeferred()
+    if (transition?.leave != null) {
+        val classes = target.domNode.getAttribute("class").orEmpty()
+        target.domNode.setAttribute("class", "$classes ${transition.leaveStart.orEmpty()}")
+        target.domNode.setAttribute("class", "$classes ${transition.leave} ${transition.leaveEnd.orEmpty()}")
+        animationDone(target.domNode).asDeferred()
+    } else null
 }
 
-val enterTransition: DomLifecycleHandler = { tag, payload ->
+val enterTransition: DomLifecycleHandler = { target, payload ->
     val transition = payload.unsafeCast<Transition?>()
-    if (transition != null) {
-        val classes = tag.domNode.getAttribute("class").orEmpty() //baseClass
-        tag.domNode.setAttribute("class", "$classes ${transition.enterStart}")
+    if (transition?.enter != null) {
+        val classes = target.domNode.getAttribute("class").orEmpty()
+        target.domNode.setAttribute("class", "$classes ${transition.enterStart.orEmpty()}")
+        //TODO: is this needed a second time in some browsers?
         kotlinx.browser.window.requestAnimationFrame {
-            tag.domNode.setAttribute("class", "$classes ${transition.enter} ${transition.enterEnd}")
-            animationDone(tag.domNode).then {
-                tag.domNode.setAttribute("class", classes)
+            target.domNode.setAttribute("class", "$classes ${transition.enter} ${transition.enterEnd.orEmpty()}")
+            animationDone(target.domNode).then {
+                target.domNode.setAttribute("class", classes)
             }
         }
     }
-    animationDone(tag.domNode).asDeferred() // Accept null
+    null
 }
+
+class Fragment(override val job: Job, override val scope: Scope, private val apply: WithDomNode<Element>.() -> Unit) :
+    RenderContext, WithDomNode<DocumentFragment> {
+    override val domNode: DocumentFragment = document.createDocumentFragment()
+
+    override fun <E : Node, T : WithDomNode<E>> register(element: T, content: (T) -> Unit): T {
+        if (element.domNode is Element) this.apply.invoke(element.unsafeCast<WithDomNode<Element>>())
+        content(element)
+        domNode.appendChild(element.domNode)
+        return element
+    }
+}
+
+fun RenderContext.fragment(
+    scopeContext: (ScopeContext.() -> Unit) = {},
+    content: RenderContext.() -> Unit,
+    apply: WithDomNode<Element>.() -> Unit,
+): Fragment {
+    //FIXME: replace by evalScope
+    val s = ScopeContext(this.scope).apply(scopeContext).scope
+    return register(Fragment(job, s, apply), content)
+}
+
+
+fun RenderContext.transition(transition: Transition, content: RenderContext.() -> Unit) =
+    fragment(content = content) {
+        mountPoint()?.apply {
+            beforeUnmount(this@fragment, leaveTransition, fade)
+            afterMount(this@fragment, enterTransition, fade)
+        }
+    }
+
+fun RenderContext.transition(
+    enter: String? = null,
+    enterStart: String? = null,
+    enterEnd: String? = null,
+    leave: String? = null,
+    leaveStart: String? = null,
+    leaveEnd: String? = null, content: RenderContext.() -> Unit
+) = transition(Transition(enter, enterStart, enterEnd, leave, leaveStart, leaveEnd), content)
+
 
 fun main() {
     val visible = storeOf(true)
@@ -77,39 +126,19 @@ fun main() {
             }
             visible.data.render {
                 if (it) {
-                    div(id = "myDiv") {
-                        inlineStyle("margin-top: 10px; width: 200px; height: 200px; background-color: red;")
-                    }.apply {
-                        val target = this
-                        mountPoint()?.apply {
-                            console.log("mount-point found")
-                            beforeUnmount(DomLifecycle(target, leaveTransition, fade))
-                            afterMount(DomLifecycle(target, enterTransition, fade))
+                    transition(fade) {
+                        div(id = "myDiv") {
+                            inlineStyle("margin-top: 10px; width: 200px; height: 200px; background-color: red;")
+                        }
+
+                        div(id = "myDiv2") {
+                            inlineStyle("margin-top: 10px; width: 200px; height: 200px; background-color: red;")
+                        }
+
+                        div(id = "myDiv3") {
+                            inlineStyle("margin-top: 10px; width: 200px; height: 200px; background-color: red;")
                         }
                     }
-
-                    div(id = "myDiv2") {
-                        inlineStyle("margin-top: 10px; width: 200px; height: 200px; background-color: red;")
-                    }.apply {
-                        val target = this
-                        mountPoint()?.apply {
-                            console.log("mount-point found")
-                            beforeUnmount(DomLifecycle(target, leaveTransition, fade))
-                            afterMount(DomLifecycle(target, enterTransition, fade))
-                        }
-                    }
-
-                    div(id = "myDiv3") {
-                        inlineStyle("margin-top: 10px; width: 200px; height: 200px; background-color: red;")
-                    }.apply {
-                        val target = this
-                        mountPoint()?.apply {
-                            console.log("mount-point found")
-                            beforeUnmount(DomLifecycle(target, leaveTransition, fade))
-                            afterMount(DomLifecycle(target, enterTransition, fade))
-                        }
-                    }
-
                 }
             }
         }
