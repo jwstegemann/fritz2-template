@@ -6,8 +6,7 @@ import dev.fritz2.dom.html.ScopeContext
 import dev.fritz2.dom.html.render
 import dev.fritz2.identification.Id
 import kotlinx.browser.document
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.asDeferred
+import kotlinx.coroutines.*
 import org.w3c.dom.DocumentFragment
 import org.w3c.dom.Element
 import org.w3c.dom.Node
@@ -54,10 +53,10 @@ class Transition(
 }
 
 val fade = Transition(
-    "transition-all duration-1000",
+    "transition-all duration-100",
     "opacity-0",
     "opacity-100",
-    "transition-all ease-out duration-1000",
+    "transition-all ease-out duration-100",
     "opacity-100",
     "opacity-0"
 )
@@ -124,7 +123,20 @@ fun main() {
     val list = storeOf(listOf(Id.next(), Id.next(), Id.next()))
     val addItem = list.handle { it + Id.next() }
     val addMany = list.handle { it + Id.next() + Id.next() + Id.next() }
+    val removeMany = list.handle { it.take(1) }
     val removeItem = list.handle { list, value: String -> list - value }
+
+    MainScope().launch {
+        for (i in 1..10000) {
+            console.log("$i")
+            delay(150)
+            if (i % 2 == 0) {
+                addMany()
+            } else {
+                removeMany()
+            }
+        }
+    }
 
     render {
         div {
@@ -139,6 +151,10 @@ fun main() {
             button("p-4 border") {
                 +"shuffle"
                 clicks handledBy list.handle { it.shuffled() }
+            }
+            button("p-4 border") {
+                +"remove many"
+                clicks handledBy removeMany
             }
 
             list.data.renderEach({ it }) { item ->
