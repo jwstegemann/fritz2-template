@@ -82,12 +82,11 @@ fun main() {
 
             list.data.renderEach({ it }) { item ->
                 div { //FIXME: get rid of this?
-                    transition(fade) {
-                        div(id = "myDiv") {
-                            inlineStyle("margin-top: 10px; width: 200px; height: 50px; background-color: lightblue;")
-                            +item
-                            clicks.map { item } handledBy removeItem
-                        }
+                    div(id = "myDiv") {
+                        inlineStyle("margin-top: 10px; width: 200px; height: 50px; background-color: lightblue;")
+                        transition(fade)
+                        +item
+                        clicks.map { item } handledBy removeItem
                     }
                 }
             }
@@ -101,19 +100,20 @@ fun main() {
             }
             visible.data.render {
                 if (it) {
-                    transition(fade) {
-                        div {
-                            div(id = "myDiv") {
-                                inlineStyle("margin-top: 10px; width: 200px; height: 200px; background-color: red;")
-                            }
+                    div {
+                        div(id = "myDiv") {
+                            inlineStyle("margin-top: 10px; width: 200px; height: 200px; background-color: red;")
+                            transition(fade)
+                        }
 
-                            div(id = "myDiv2") {
-                                inlineStyle("margin-top: 10px; width: 200px; height: 200px; background-color: red;")
-                            }
+                        div(id = "myDiv2") {
+                            inlineStyle("margin-top: 10px; width: 200px; height: 200px; background-color: red;")
+                            transition(fade)
+                        }
 
-                            div(id = "myDiv3") {
-                                inlineStyle("margin-top: 10px; width: 200px; height: 200px; background-color: red;")
-                            }
+                        div(id = "myDiv3") {
+                            inlineStyle("margin-top: 10px; width: 200px; height: 200px; background-color: red;")
+                            transition(fade)
                         }
                     }
                 }
