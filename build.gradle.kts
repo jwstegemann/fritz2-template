@@ -1,14 +1,13 @@
 plugins {
-    kotlin("multiplatform") version "1.6.0"
-    id("com.google.devtools.ksp") version "1.6.0-1.0.1"
-//    kotlin("multiplatform") version "1.5.31"
-//    id("com.google.devtools.ksp") version "1.5.31-1.0.0"
+    kotlin("multiplatform") version "1.6.10"
+    id("com.google.devtools.ksp") version "1.6.10-1.0.2"
 }
 
 repositories {
-    mavenLocal()
     mavenCentral()
 }
+
+val fritz2Version = "0.14"
 
 kotlin {
     jvm ()
@@ -17,10 +16,9 @@ kotlin {
     }.binaries.executable()
 
     sourceSets {
-
         val commonMain by getting {
             dependencies {
-                implementation("dev.fritz2:core:0.14-SNAPSHOT")
+                implementation("dev.fritz2:core:$fritz2Version")
             }
         }
         val jvmMain by getting {
@@ -35,8 +33,8 @@ kotlin {
 }
 
 dependencies {
-    add("kspMetadata", "dev.fritz2:lenses-annotation-processor:0.14-SNAPSHOT")
-    //add("kspJs", "dev.fritz2:lenses-annotation-processor:0.14-SNAPSHOT")
+    add("kspMetadata", "dev.fritz2:lenses-annotation-processor:$fritz2Version")
+    //add("kspJs", "dev.fritz2:lenses-annotation-processor:$fritz2Version")
 }
 
 // Generate common code with ksp instead of per-platform, hopefully this won't be needed in the future.
