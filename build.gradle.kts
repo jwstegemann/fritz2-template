@@ -4,13 +4,17 @@ plugins {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
-val fritz2Version = "0.14"
+val fritz2Version = "0.14-SNAPSHOT"
+
+//group = "my.fritz2.app"
+//version = "0.0.1-SNAPSHOT"
 
 kotlin {
-    jvm ()
+    jvm()
     js(IR) {
         browser()
     }.binaries.executable()
@@ -34,24 +38,9 @@ kotlin {
 
 dependencies {
     add("kspMetadata", "dev.fritz2:lenses-annotation-processor:$fritz2Version")
-    //add("kspJs", "dev.fritz2:lenses-annotation-processor:$fritz2Version")
 }
 
-// Generate common code with ksp instead of per-platform, hopefully this won't be needed in the future.
-// https://github.com/google/ksp/issues/567
-kotlin.sourceSets.commonMain {
-    kotlin.srcDir("build/generated/ksp/commonMain/kotlin")
-    //kotlin.srcDir("build/generated/ksp/jsMain/kotlin")
-}
+kotlin.sourceSets.commonMain { kotlin.srcDir("build/generated/ksp/commonMain/kotlin") }
 tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().all {
-    if (name != "kspKotlinMetadata") {
-        dependsOn("kspKotlinMetadata")
-    }
-
-    // Does not work -> circular dependencies -> but also stand alone does not work eiter -> Lense in App.kt gets not recognized
-    /*
-    if (name != "kspKotlinJs") {
-        dependsOn("kspKotlinJs")
-    }
-     */
+    if (name != "kspKotlinMetadata") dependsOn("kspKotlinMetadata")
 }
