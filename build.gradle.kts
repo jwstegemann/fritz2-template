@@ -9,7 +9,7 @@ repositories {
     mavenCentral()
 }
 
-val fritz2Version = "0.14-SNAPSHOT"
+val fritz2Version = "0.14"
 
 //group = "my.fritz2.app"
 //version = "0.0.1-SNAPSHOT"
