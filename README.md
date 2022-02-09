@@ -1,4 +1,4 @@
-![fritz2](https://www.fritz2.dev/images/fritz2_logo_grey.png)
+[![fritz2](https://www.fritz2.dev/images/fritz2_logo_grey.png)](https://www.fritz2.dev/)
 
 # A getting-started-template for fritz2-apps.
 
