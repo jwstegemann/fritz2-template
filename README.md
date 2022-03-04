@@ -4,6 +4,8 @@
 
 [![video](https://img.youtube.com/vi/c-ybTQdF5xk/0.jpg)](https://www.youtube.com/watch?v=c-ybTQdF5xk)
 
-Please have a look at [fritz2's documentation](https://docs.fritz2.dev) or the [examples](https://www.fritz2.dev/examples.html) to learn, how to use it.
+Please have a look at [fritz2's documentation](https://www.fritz2.dev/docs) or
+the [examples](https://www.fritz2.dev/examples.html) to learn, how to use it.
 
-If you have any problems with this template, please open an issue at [fritz2](https://github.com/jwstegemann/fritz2/issues).
+If you have any problems with this template, please open an issue
+at [fritz2](https://github.com/jwstegemann/fritz2/issues).

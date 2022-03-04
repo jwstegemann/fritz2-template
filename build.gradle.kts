@@ -24,6 +24,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("dev.fritz2:core:$fritz2Version")
+                // implementation("dev.fritz2:headless:$fritz2Version") // optional
             }
         }
         val jvmMain by getting {
