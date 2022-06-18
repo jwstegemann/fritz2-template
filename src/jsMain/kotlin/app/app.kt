@@ -1,7 +1,7 @@
 package app
 
-import dev.fritz2.binding.storeOf
-import dev.fritz2.dom.html.render
+import dev.fritz2.core.render
+import dev.fritz2.core.storeOf
 import model.Framework
 import model.name
 
