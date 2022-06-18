@@ -1,9 +1,14 @@
-[![fritz2](https://www.fritz2.dev/images/fritz2_logo_grey.png)](https://www.fritz2.dev/)
+[![fritz2](https://www.fritz2.dev/img/fritz2_logo_dark.png)](https://www.fritz2.dev/)
 
 # A getting-started-template for fritz2-apps.
 
-[![video](https://img.youtube.com/vi/c-ybTQdF5xk/0.jpg)](https://www.youtube.com/watch?v=c-ybTQdF5xk)
+template project to quickly set up a fritz2-app
 
-Please have a look at [fritz2's documentation](https://docs.fritz2.dev) or the [examples](https://www.fritz2.dev/examples.html) to learn, how to use it.
+Please have a look at [fritz2's documentation](https://fritz2.dev/docs) 
+or the [examples](https://examples.fritz2.dev/) to learn, how to use it.
 
-If you have any problems with this template, please open an issue at [fritz2](https://github.com/jwstegemann/fritz2/issues).
+If you want to style your fritz2-app with [tailwind.css](https://tailwindcss.com/) 
+we provide an extra [tailwind-template](https://github.com/jwstegemann/fritz2-tailwind-template) for it.
+
+If you have any problems with this template, 
+please open an issue at [fritz2](https://github.com/jwstegemann/fritz2/issues).
