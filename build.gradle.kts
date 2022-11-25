@@ -9,7 +9,7 @@ repositories {
     maven("https://s01.oss.sonatype.org/content/repositories/snapshots/") // new repository here
 }
 
-val fritz2Version = "1.0-SNAPSHOT"
+val fritz2Version = "1.0-RC2"
 
 //group = "my.fritz2.app"
 //version = "0.0.1-SNAPSHOT"
