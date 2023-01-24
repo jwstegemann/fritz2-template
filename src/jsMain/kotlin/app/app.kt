@@ -7,7 +7,7 @@ import model.name
 
 fun main() {
     val frameworkStore = storeOf(Framework("fritz2"))
-    val name = frameworkStore.sub(Framework.name())
+    val name = frameworkStore.map(Framework.name())
 
     render {
         p {
