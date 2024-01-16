@@ -1,10 +1,7 @@
 import com.google.devtools.ksp.gradle.KspTaskMetadata
 
 plugins {
-    //kotlin("multiplatform") version "1.9.22"
     alias(libs.plugins.kotlin.multiplatform)
-    // KSP support
-    //id("com.google.devtools.ksp") version "1.9.22-1.0.16"
     alias(libs.plugins.google.ksp)
 }
 
