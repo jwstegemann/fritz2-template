@@ -1,15 +1,17 @@
+import com.google.devtools.ksp.gradle.KspTaskMetadata
+
 plugins {
-    kotlin("multiplatform") version "1.7.20"
+    //kotlin("multiplatform") version "1.9.22"
+    alias(libs.plugins.kotlin.multiplatform)
     // KSP support
-    id("com.google.devtools.ksp") version "1.7.20-1.0.6"
+    //id("com.google.devtools.ksp") version "1.9.22-1.0.16"
+    alias(libs.plugins.google.ksp)
 }
 
 repositories {
     mavenCentral()
     maven("https://s01.oss.sonatype.org/content/repositories/snapshots/") // new repository here
 }
-
-val fritz2Version = "1.0-RC13"
 
 //group = "my.fritz2.app"
 //version = "0.0.1-SNAPSHOT"
@@ -21,33 +23,23 @@ kotlin {
     }.binaries.executable()
 
     sourceSets {
-        val commonMain by getting {
+        commonMain {
             dependencies {
-                implementation("dev.fritz2:core:$fritz2Version")
-                // implementation("dev.fritz2:headless:$fritz2Version") // optional
+                implementation(libs.fritz2.core)
+                // implementation(libs.fritz2.headless) // optional
             }
         }
-        val jvmMain by getting {
+        jvmMain {
             dependencies {
             }
         }
-        val jsMain by getting {
+        jsMain {
             dependencies {
             }
         }
     }
 }
 
-/**
- * KSP support - start
- */
-dependencies {
-    add("kspCommonMainMetadata", "dev.fritz2:lenses-annotation-processor:$fritz2Version")
-}
-kotlin.sourceSets.commonMain { kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin") }
-tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().all {
-    if (name != "kspCommonMainKotlinMetadata") dependsOn("kspCommonMainKotlinMetadata")
-}
-/**
- * KSP support - end
- */
+// KSP support for Lens generation
+dependencies.kspCommonMainMetadata(libs.fritz2.lenses)
+kotlin.sourceSets.commonMain { tasks.withType<KspTaskMetadata> { kotlin.srcDir(destinationDirectory) } }
