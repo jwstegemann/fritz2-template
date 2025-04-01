@@ -1,6 +1,6 @@
 [versions]
-kotlin = "1.9.22"
-fritz2 = "1.0-RC19"
+kotlin = "2.0.20"
+fritz2 = "1.0-RC20"
 
 [libraries]
 fritz2-core = { module = "dev.fritz2:core", version.ref = "fritz2" }
@@ -9,4 +9,4 @@ fritz2-lenses = { group = "dev.fritz2", name = "lenses-annotation-processor", ve
 
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-google-ksp = { id = "com.google.devtools.ksp", version = "1.9.22-1.0.16" }
+google-ksp = { id = "com.google.devtools.ksp", version = "2.0.20-1.0.25" }
